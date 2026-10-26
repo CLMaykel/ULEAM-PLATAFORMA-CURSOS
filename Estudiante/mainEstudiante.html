@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel de Estudiante - ULEAM</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <div class="dashboard-layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo-icon">U</div>
+        <h2>ULEAM</h2>
+      </div>
+      <nav class="nav-menu">
+        <span class="nav-section-title">ESTUDIANTE</span>
+        <button class="nav-link active" onclick="showSection('resumen')">Mi Resumen</button>
+        <button class="nav-link" onclick="showSection('explorar')">Explorar Cursos</button>
+        <button class="nav-link" onclick="showSection('mis-cursos')">Mis Cursos</button>
+      </nav>
+      <div class="sidebar-footer">
+        <button class="btn btn-outline-light btn-full" onclick="showSection('perfil')" style="margin-bottom: 8px;">Mi Perfil</button>
+        <a href="../index.html" class="btn btn-danger btn-full">Cerrar sesión</a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <h3>Panel del Estudiante</h3>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div class="logo-icon" style="width: 32px; height: 32px; font-size: 14px;">B</div>
+          <div>
+            <strong style="font-size: 13px;">Bryan Chiquito</strong><br>
+            <small style="color: #64748b;">Estudiante</small>
+          </div>
+        </div>
+      </header>
+
+      <div class="content-body">
+        
+        <!-- 1. VISTA: MI RESUMEN -->
+        <section id="sec-resumen">
+          <h2>Hola, Bryan</h2>
+          <p style="color: #64748b;">Continúa aprendiendo. Revisa tu rendimiento y avance semanal.</p>
+
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <h4>Cursos Activos</h4>
+              <p class="metric-val" id="summary-courses-count">2</p>
+            </div>
+            <div class="metric-card">
+              <h4>Tiempo de Estudio</h4>
+              <p class="metric-val">8.5 h</p>
+            </div>
+            <div class="metric-card">
+              <h4>Certificados</h4>
+              <p class="metric-val">6</p>
+            </div>
+            <div class="metric-card">
+              <h4>Tareas Pendientes</h4>
+              <p class="metric-val">2</p>
+            </div>
+          </div>
+
+          <div class="grid-2 margin-top-20">
+            <div class="card">
+              <h3>Progreso en Mis Cursos</h3>
+              <p style="color: #64748b; font-size: 12px; margin-bottom: 15px;">Porcentaje completado de lecciones</p>
+              
+              <div style="margin-bottom: 15px;">
+                <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600;">
+                  <span>Ingeniería de Requisitos</span>
+                  <span>75%</span>
+                </div>
+                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 75%;"></div></div>
+              </div>
+
+              <div>
+                <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600;">
+                  <span>Desarrollo Web</span>
+                  <span>45%</span>
+                </div>
+                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 45%;"></div></div>
+              </div>
+            </div>
+
+            <div class="card">
+              <h3>Horas de Estudio esta Semana</h3>
+              <p style="color: #64748b; font-size: 12px;">Distribución diaria del tiempo en plataforma</p>
+
+              <div class="chart-bar-container">
+                <div class="chart-column"><div class="chart-bar" style="height: 40%;"></div><span class="chart-label">Lun</span></div>
+                <div class="chart-column"><div class="chart-bar" style="height: 70%;"></div><span class="chart-label">Mar</span></div>
+                <div class="chart-column"><div class="chart-bar" style="height: 90%;"></div><span class="chart-label">Mié</span></div>
+                <div class="chart-column"><div class="chart-bar" style="height: 50%;"></div><span class="chart-label">Jue</span></div>
+                <div class="chart-column"><div class="chart-bar" style="height: 80%;"></div><span class="chart-label">Vie</span></div>
+                <div class="chart-column"><div class="chart-bar" style="height: 30%;"></div><span class="chart-label">Sáb</span></div>
+                <div class="chart-column"><div class="chart-bar" style="height: 10%;"></div><span class="chart-label">Dom</span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. VISTA: EXPLORAR CURSOS -->
+        <section id="sec-explorar" class="hidden">
+          <h2>Explorar Cursos</h2>
+          <p style="color: #64748b;">Catálogo general de asignaturas. Máximo 3 cursos activos por estudiante.</p>
+          <div class="courses-grid" id="catalog-container"></div>
+        </section>
+
+        <!-- 3. VISTA: MIS CURSOS -->
+        <section id="sec-mis-cursos" class="hidden">
+          <div id="enrolled-list-view">
+            <h2>Mis Cursos</h2>
+            <p style="color: #64748b;">Cursos en los que te encuentras matriculado actualmente.</p>
+            <div class="courses-grid" id="enrolled-container"></div>
+          </div>
+
+          <div id="course-detail-view" class="hidden">
+            <button class="btn btn-outline" onclick="backToEnrolledList()" style="margin-bottom: 15px;">← Volver a Mis Cursos</button>
+            <h2 id="detail-title">Nombre del Curso</h2>
+            <p style="color: #64748b;" id="detail-desc">Descripción breve del curso.</p>
+
+            <div class="course-tabs">
+              <button class="tab-btn active" onclick="switchTab('info')">Información General</button>
+              <button class="tab-btn" onclick="switchTab('lessons')">Aula Virtual / Contenido</button>
+              <button class="tab-btn" onclick="switchTab('tasks')">Tareas y Evaluaciones</button>
+            </div>
+
+            <div id="tab-info" class="card">
+              <h3>Acerca de este curso</h3>
+              <p id="detail-info-body" class="margin-top-10">Descripción extendida del curso.</p>
+              <br>
+              <p><strong>Instructor responsable:</strong> <span id="detail-instructor">Adolfo Meneses</span></p>
+              <p><strong>Duración estimada:</strong> 40 horas académicas</p>
+            </div>
+
+            <div id="tab-lessons" class="card hidden">
+              <h3>Clase Interactiva</h3>
+              <div class="video-placeholder margin-top-10">
+                <p>▶ Reproductor de Video - Clase Interactiva</p>
+              </div>
+              <ul class="lesson-list margin-top-10">
+                <li>✔ Lección 1: Introducción a los conceptos fundamentales (15 min)</li>
+                <li>✔ Lección 2: Entrevistas y Técnicas de Levantamiento (25 min)</li>
+                <li>⏳ Lección 3: Especificación práctica de requisitos (40 min)</li>
+              </ul>
+            </div>
+
+            <div id="tab-tasks" class="card hidden">
+              <h3>Actividades, Tareas y Evaluaciones</h3>
+              <p style="color: #64748b; font-size: 13px;">Haz clic en cualquier actividad pendiente para abrir las instrucciones y realizar la entrega.</p>
+              
+              <table class="data-table margin-top-10">
+                <thead>
+                  <tr>
+                    <th>Actividad</th>
+                    <th>Tipo</th>
+                    <th>Fecha / Tiempo Límite</th>
+                    <th>Estado</th>
+                    <th>Acción</th>
+                  </tr>
+                </thead>
+                <tbody id="student-tasks-table">
+                  <tr>
+                    <td>Tarea 1: Informe SRS</td>
+                    <td>Tarea Escrita</td>
+                    <td>15 Oct, 23:59</td>
+                    <td><span class="badge-status">Calificado: 9.5</span></td>
+                    <td><button class="btn btn-outline" onclick="openTaskModal('Tarea 1: Informe SRS', 'Calificado', '15 Oct, 23:59', 'Realizar la especificación SRS en formato PDF.')">Ver Entrega</button></td>
+                  </tr>
+                  <tr>
+                    <td>Tarea 2: Diagrama de Casos de Uso</td>
+                    <td>Tarea Práctica</td>
+                    <td>25 Oct, 23:59</td>
+                    <td><span class="badge-pending">Pendiente</span></td>
+                    <td><button class="btn btn-accent" onclick="openTaskModal('Tarea 2: Diagrama de Casos de Uso', 'Pendiente', '25 Oct, 23:59', 'Diseñar los diagramas de casos de uso del módulo de pagos.')">Abrir Tarea</button></td>
+                  </tr>
+                  <tr>
+                    <td>Evaluación Primer Parcial</td>
+                    <td>Examen Virtual</td>
+                    <td>28 Oct, 20:00 (60 min)</td>
+                    <td><span class="badge-pending">Pendiente</span></td>
+                    <td><button class="btn btn-primary" onclick="openTaskModal('Evaluación Primer Parcial', 'Pendiente', '28 Oct, 20:00', 'Examen de selección múltiple sobre los Temas 1 y 2.')">Rendir Examen</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+
+          <div id="task-modal" class="card margin-top-20 hidden" style="border: 2px solid #4f46e5; background: #faf5ff;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <h3 id="modal-task-title">Nombre de la Actividad</h3>
+              <button class="btn btn-outline" onclick="closeTaskModal()">Cerrar ✕</button>
+            </div>
+            
+            <div style="margin-top: 10px; font-size: 13px; color: #475569;">
+              <p><strong>Fecha Límite impuesta por el docente:</strong> <span id="modal-task-deadline" style="color: #dc2626; font-weight: bold;">--</span></p>
+              <p style="margin-top: 5px;"><strong>Estado actual:</strong> <span id="modal-task-status">--</span></p>
+            </div>
+
+            <div style="margin: 15px 0; padding: 12px; background: white; border-radius: 8px; border: 1px solid #e2e8f0;">
+              <h4>Especificaciones e Instrucciones del Profesor:</h4>
+              <p id="modal-task-instructions" style="color: #334155; font-size: 13px; margin-top: 5px;">Cargando instrucciones...</p>
+            </div>
+
+            <form onsubmit="event.preventDefault(); alert('✔ Entrega enviada correctamente al profesor.'); closeTaskModal();">
+              <div class="form-group">
+                <label>Tu respuesta / Enlace al documento o solución</label>
+                <textarea rows="3" placeholder="Adjunta la URL de tu repositorio, documento de Google Drive o desarrollo del examen..." required></textarea>
+              </div>
+              <button type="submit" class="btn btn-secondary">Enviar actividad realizada</button>
+            </form>
+          </div>
+
+        </section>
+
+        <!-- 4. VISTA: PERFIL -->
+        <section id="sec-perfil" class="hidden">
+          <h2>Perfil personal</h2>
+          <p style="color: #64748b;">Actualiza tus datos de usuario.</p>
+          <div class="grid-2">
+            <div class="card" style="text-align: center;">
+              <div class="logo-icon" style="width: 80px; height: 80px; font-size: 32px; margin: 0 auto 15px;">B</div>
+              <h3>Bryan Chiquito</h3>
+              <p style="color: #64748b;">Estudiante · ULEAM</p>
+              <span class="badge-status margin-top-10">Cuenta verificada</span>
+            </div>
+
+            <div class="card">
+              <h3>Información personal</h3>
+              <form onsubmit="event.preventDefault(); alert('✔ Datos guardados correctamente.');">
+                <div class="form-group">
+                  <label>Nombre Completo</label>
+                  <input type="text" value="Bryan Chiquito" required>
+                </div>
+                <div class="form-group">
+                  <label>Correo electrónico <small style="color: #ef4444;">(No editable)</small></label>
+                  <input type="email" value="bryan.chiquito@estudiante.edu.ec" disabled class="disabled-input">
+                </div>
+                <div class="form-group">
+                  <label>Biografía</label>
+                  <textarea rows="3">Estudiante de desarrollo de software en ULEAM.</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- VÍNCULO AL SCRIPT SEPARADO EN LA CARPETA JS -->
+  <script src="../js/estudiante.js"></script>
+</body>
+</html>

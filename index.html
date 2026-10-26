@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Acceso - ULEAM</title>
+  <!-- Ruta correcta del CSS desde la raíz principal -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body style="display: flex; align-items: center; justify-content: center; height: 100vh; background: linear-gradient(135deg, #1e1b4b 0%, #4f46e5 100%);">
+
+  <div style="background: white; padding: 40px; border-radius: 16px; width: 420px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
+    <div style="text-align: center; margin-bottom: 25px;">
+      <div class="logo-icon" style="margin: 0 auto 10px;">U</div>
+      <h2>Plataforma ULEAM</h2>
+      <p style="color: #64748b; font-size: 13px; margin-top: 5px;">Ingresa tus credenciales para continuar</p>
+    </div>
+
+    <form id="login-form">
+      <div class="form-group">
+        <label>Correo electrónico</label>
+        <input type="email" id="email" placeholder="ejemplo@uleam.edu.ec" required>
+      </div>
+
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" id="password" placeholder="••••••••" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-full">Iniciar sesión</button>
+      <div id="error-msg" style="color: #ef4444; font-size: 12px; margin-top: 10px; text-align: center;" class="hidden">
+        Credenciales incorrectas.
+      </div>
+    </form>
+
+    <div style="margin-top: 20px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 11px;">
+      <p><strong>Cuentas de acceso:</strong></p>
+      <ul style="margin-top: 5px; list-style-position: inside;">
+        <li>Estudiante: bryan.chiquito@estudiante.edu.ec / estudiante123</li>
+        <li>Profesor: adolfo.meneses@profesor.edu.ec / profesor123</li>
+        <li>Admin: maykel.castro@admin.edu.ec / admin123</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const pass = document.getElementById('password').value.trim();
+
+      if (email === "bryan.chiquito@estudiante.edu.ec" && pass === "estudiante123") {
+        window.location.href = "Estudiante/mainEstudiante.html";
+      } else if (email === "adolfo.meneses@profesor.edu.ec" && pass === "profesor123") {
+        window.location.href = "Docente/mainDocente.html";
+      } else if (email === "maykel.castro@admin.edu.ec" && pass === "admin123") {
+        window.location.href = "Admin/mainAdmin.html";
+      } else {
+        document.getElementById('error-msg').classList.remove('hidden');
+      }
+    });
+  </script>
+</body>
+</html>

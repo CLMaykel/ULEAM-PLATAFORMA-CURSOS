@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel de Administrador - ULEAM</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <div class="dashboard-layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo-icon">U</div>
+        <h2>ULEAM</h2>
+      </div>
+      <nav class="nav-menu">
+        <span class="nav-section-title">ADMINISTRACIÓN</span>
+        <button class="nav-link active" onclick="showAdminSection('overview')">Vista General</button>
+        <button class="nav-link" onclick="showAdminSection('crear-curso')">Crear Cursos y Asignar Docente</button>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="../index.html" class="btn btn-danger btn-full">Cerrar sesión</a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <h3>Panel de Administración Global</h3>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div class="logo-icon" style="width: 32px; height: 32px; font-size: 14px;">M</div>
+          <div>
+            <strong style="font-size: 13px;">Maykel Castro</strong><br>
+            <small style="color: #64748b;">Administrador</small>
+          </div>
+        </div>
+      </header>
+
+      <div class="content-body">
+        
+        <section id="admin-sec-overview">
+          <h2>Estado de la Plataforma</h2>
+          <p style="color: #64748b;">Métricas globales del rendimiento del sistema ULEAM.</p>
+
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <h4>Usuarios Activos</h4>
+              <p class="metric-val">12,840</p>
+            </div>
+            <div class="metric-card">
+              <h4>Cursos Publicados</h4>
+              <p class="metric-val" id="admin-courses-count">186</p>
+            </div>
+            <div class="metric-card">
+              <h4>Docentes Registrados</h4>
+              <p class="metric-val">352</p>
+            </div>
+            <div class="metric-card">
+              <h4>Disponibilidad</h4>
+              <p class="metric-val">99.98%</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="admin-sec-crear-curso" class="hidden">
+          <h2>Crear Nuevo Curso en la Plataforma</h2>
+          <p style="color: #64748b;">Registra asignaturas, asigna un profesor responsable y limita la capacidad de estudiantes.</p>
+
+          <div class="grid-2">
+            <div class="card">
+              <h3>Formulario de Creación de Curso</h3>
+              <form onsubmit="event.preventDefault(); addCourseByAdmin();" class="margin-top-10">
+                <div class="form-group">
+                  <label>Nombre del Curso</label>
+                  <input type="text" id="admin-course-name" placeholder="Ej. Arquitectura de Software" required>
+                </div>
+
+                <div class="form-group">
+                  <label>Categoría</label>
+                  <select id="admin-course-category" class="form-group-select">
+                    <option value="Tecnología">Tecnología</option>
+                    <option value="Negocios">Negocios</option>
+                    <option value="Diseño">Diseño</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>Profesor Responsable Asignado</label>
+                  <select id="admin-course-teacher" class="form-group-select">
+                    <option value="Adolfo Meneses">Adolfo Meneses (Profesor Titular)</option>
+                    <option value="Mariana López">Mariana López</option>
+                    <option value="Carlos Méndez">Carlos Méndez</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>Cupo Máximo de Estudiantes</label>
+                  <input type="number" id="admin-course-limit" min="5" max="100" value="30" required>
+                </div>
+
+                <div class="form-group">
+                  <label>Descripción del Curso</label>
+                  <textarea id="admin-course-desc" rows="3" placeholder="Resumen del contenido temático..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-full">Crear Curso y Asignar Profesor</button>
+              </form>
+            </div>
+
+            <div class="card">
+              <h3>Cursos Creados Recientemente</h3>
+              <table class="data-table margin-top-10">
+                <thead>
+                  <tr>
+                    <th>Curso</th>
+                    <th>Profesor</th>
+                    <th>Cupo Máx</th>
+                    <th>Estado</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-courses-tbody">
+                  <tr>
+                    <td>Ingeniería de Requisitos</td>
+                    <td>Adolfo Meneses</td>
+                    <td>40 Est.</td>
+                    <td><span class="badge-status">Activo</span></td>
+                  </tr>
+                  <tr>
+                    <td>Desarrollo Web</td>
+                    <td>Adolfo Meneses</td>
+                    <td>35 Est.</td>
+                    <td><span class="badge-status">Activo</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- VÍNCULO AL SCRIPT SEPARADO EN LA CARPETA JS -->
+  <script src="../js/admin.js"></script>
+</body>
+</html>

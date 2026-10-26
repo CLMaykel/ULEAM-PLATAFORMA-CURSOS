@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel de Docente - ULEAM</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <div class="dashboard-layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo-icon">U</div>
+        <h2>ULEAM</h2>
+      </div>
+      <nav class="nav-menu">
+        <span class="nav-section-title">DOCENTE</span>
+        <button class="nav-link active" onclick="showDocSection('gestion')">Cursos y Contenidos</button>
+        <button class="nav-link" onclick="showDocSection('calificar')">Calificaciones</button>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="../index.html" class="btn btn-danger btn-full">Cerrar sesión</a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <h3>Panel del Docente</h3>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div class="logo-icon" style="width: 32px; height: 32px; font-size: 14px;">A</div>
+          <div>
+            <strong style="font-size: 13px;">Adolfo Meneses</strong><br>
+            <small style="color: #64748b;">Profesor</small>
+          </div>
+        </div>
+      </header>
+
+      <div class="content-body">
+        
+        <section id="doc-sec-gestion">
+          <h2>Gestión de Cursos Asignados</h2>
+          <p style="color: #64748b;">Sube material educativo o programa tareas y exámenes fijando el tiempo límite.</p>
+
+          <div class="grid-2">
+            <div class="card">
+              <h3>Mis Cursos Asignados</h3>
+              <ul class="lesson-list margin-top-10">
+                <li><strong>Ingeniería de Requisitos</strong><br><small style="color: #64748b;">Estudiantes: 158 | Estado: Activo</small></li>
+                <li><strong>Desarrollo Web</strong><br><small style="color: #64748b;">Estudiantes: 196 | Estado: Activo</small></li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <h3>Añadir Recurso / Programar Tarea con Límite</h3>
+              <form onsubmit="event.preventDefault(); alert('✔ Tarea/Prueba programada exitosamente con su tiempo límite.'); this.reset();" class="margin-top-10">
+                <div class="form-group">
+                  <label>Seleccionar Curso</label>
+                  <select class="form-group-select">
+                    <option>Ingeniería de Requisitos de Software</option>
+                    <option>Fundamentos de Desarrollo Web</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Tipo de Publicación</label>
+                  <select class="form-group-select">
+                    <option>Tarea Programada</option>
+                    <option>Evaluación / Examen Virtual</option>
+                    <option>Recurso de Clase (PDF/Video)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Título de la actividad</label>
+                  <input type="text" placeholder="Ej. Tarea 2: Casos de Uso" required>
+                </div>
+                <div class="form-group">
+                  <label>Fecha y Hora Límite (Establecida por el profesor)</label>
+                  <input type="datetime-local" required>
+                </div>
+                <div class="form-group">
+                  <label>Instrucciones y Especificaciones</label>
+                  <textarea rows="3" placeholder="Detalla los requisitos de la entrega..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Publicar en el curso</button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <section id="doc-sec-calificar" class="hidden">
+          <h2>Centro de Calificaciones</h2>
+          <p style="color: #64748b;">Revisa las entregas y asigna notas con mensajes personalizados.</p>
+
+          <div class="card">
+            <h3>Entregas Recibidas</h3>
+            <table class="data-table margin-top-10">
+              <thead>
+                <tr>
+                  <th>Estudiante</th>
+                  <th>Curso</th>
+                  <th>Actividad</th>
+                  <th>Estado</th>
+                  <th>Acción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Bryan Chiquito</td>
+                  <td>Ingeniería de Requisitos</td>
+                  <td>Tarea 1: Informe SRS</td>
+                  <td><span class="badge-pending">Pendiente</span></td>
+                  <td><button class="btn btn-accent" onclick="openGradeModal('Bryan Chiquito', 'Tarea 1: Informe SRS')">Calificar</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div id="grade-panel" class="card margin-top-20 hidden" style="background: #f8fafc; border: 2px solid #06b6d4;">
+            <h3>Evaluar a: <span id="student-target-name">--</span></h3>
+            <p style="color: #64748b;">Actividad: <strong id="task-target-name">--</strong></p>
+
+            <form onsubmit="event.preventDefault(); alert('✔ Calificación enviada correctamente.'); document.getElementById('grade-panel').classList.add('hidden');" class="margin-top-10">
+              <div class="form-group">
+                <label>Calificación (0 - 10)</label>
+                <input type="number" step="0.1" min="0" max="10" placeholder="Ej. 9.5" required>
+              </div>
+              <div class="form-group">
+                <label>Mensaje / Retroalimentación</label>
+                <textarea rows="3" placeholder="Escribe observaciones..." required></textarea>
+              </div>
+              <button type="submit" class="btn btn-secondary">Guardar y enviar nota</button>
+            </form>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- VÍNCULO AL SCRIPT SEPARADO EN LA CARPETA JS -->
+  <script src="../js/docente.js"></script>
+</body>
+</html>
